@@ -1,0 +1,101 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String     @id @default(cuid())
+  firstName     String?
+  lastName      String?
+  name          String?
+  email         String     @unique
+  emailVerified DateTime?
+  passwordHash  String?
+  image         String?
+  accountType   String     @default("individual")
+  orgName       String?
+  postAmount    Boolean    @default(true)
+  postName      Boolean    @default(true)
+  role          String     @default("donor")
+  accounts      Account[]
+  sessions      Session[]
+  donations     Donation[]
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Donation {
+  id                String    @id @default(cuid())
+  userId            String?
+  user              User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  campaignId        String?
+  campaign          Campaign? @relation(fields: [campaignId], references: [id], onDelete: SetNull)
+  donorEmail        String
+  donorFirstName    String?
+  donorLastName     String?
+  amount            Int
+  currency          String    @default("usd")
+  stripePaymentId   String?   @unique
+  dedicationType    String    @default("no")
+  dedicationName    String?
+  dedicationMessage String?
+  postAmount        Boolean   @default(true)
+  postName          Boolean   @default(true)
+  status            String    @default("pending")
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
+model Campaign {
+  id           String     @id @default(cuid())
+  title        String
+  slug         String     @unique
+  description  String?
+  goalCents    Int
+  startDate    DateTime
+  endDate      DateTime
+  isActive     Boolean    @default(true)
+  showOnBanner Boolean    @default(true)
+  sortOrder    Int        @default(0)
+  donations    Donation[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
