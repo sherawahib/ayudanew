@@ -1,78 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, useActionState, useState } from "react";
+import { registerAction } from "@/app/donors/sign-up/actions";
 import DonorPortalShell from "@/components/donors/DonorPortalShell";
 import SocialAuthButtons, { inputClass } from "@/components/donors/SocialAuthButtons";
 
 type AccountType = "individual" | "organization";
 
 export default function SignUpForm() {
-  const router = useRouter();
   const [accountType, setAccountType] = useState<AccountType>("individual");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [orgName, setOrgName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [state, formAction, pending] = useActionState(registerAction, null);
 
-  async function handleSubmit(event: FormEvent) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setError(null);
-
-    if (password.length < 8) {
-      setError("Password must be at least 8 characters.");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      const response = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          password,
-          firstName,
-          lastName,
-          accountType,
-          orgName: accountType === "organization" ? orgName : undefined,
-        }),
-      });
-
-      const data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.error ?? "Unable to create account.");
-      }
-
-      const signInResult = await signIn("credentials", {
-        email: email.trim().toLowerCase(),
-        password,
-        redirect: false,
-      });
-
-      if (signInResult?.error) {
-        router.push(`/donors/sign-in?registered=1&email=${encodeURIComponent(email.trim().toLowerCase())}`);
-        return;
-      }
-
-      window.location.assign("/donors/dashboard");
-    } catch (submitError) {
-      setError(submitError instanceof Error ? submitError.message : "Something went wrong.");
-    } finally {
-      setLoading(false);
-    }
+    formAction(new FormData(event.currentTarget));
   }
 
   return (
@@ -91,6 +33,8 @@ export default function SignUpForm() {
       <SocialAuthButtons mode="sign-up" />
 
       <form onSubmit={handleSubmit} className="space-y-4">
+        <input type="hidden" name="accountType" value={accountType} />
+
         <fieldset>
           <legend className="mb-2 text-sm font-medium text-[#0f2d52]">
             Are you representing an Individual or Organization?
@@ -120,10 +64,9 @@ export default function SignUpForm() {
             </label>
             <input
               id="org-name"
+              name="orgName"
               type="text"
               required
-              value={orgName}
-              onChange={(event) => setOrgName(event.target.value)}
               className={inputClass}
             />
           </div>
@@ -136,11 +79,10 @@ export default function SignUpForm() {
             </label>
             <input
               id="first-name"
+              name="firstName"
               type="text"
               required
               autoComplete="given-name"
-              value={firstName}
-              onChange={(event) => setFirstName(event.target.value)}
               className={inputClass}
             />
           </div>
@@ -150,11 +92,10 @@ export default function SignUpForm() {
             </label>
             <input
               id="last-name"
+              name="lastName"
               type="text"
               required
               autoComplete="family-name"
-              value={lastName}
-              onChange={(event) => setLastName(event.target.value)}
               className={inputClass}
             />
           </div>
@@ -166,11 +107,10 @@ export default function SignUpForm() {
           </label>
           <input
             id="signup-email"
+            name="email"
             type="email"
             required
             autoComplete="email"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
             className={inputClass}
           />
         </div>
@@ -181,12 +121,11 @@ export default function SignUpForm() {
           </label>
           <input
             id="signup-password"
+            name="password"
             type="password"
             required
             autoComplete="new-password"
             minLength={8}
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
             className={inputClass}
           />
         </div>
@@ -197,27 +136,26 @@ export default function SignUpForm() {
           </label>
           <input
             id="confirm-password"
+            name="confirmPassword"
             type="password"
             required
             autoComplete="new-password"
-            value={confirmPassword}
-            onChange={(event) => setConfirmPassword(event.target.value)}
             className={inputClass}
           />
         </div>
 
-        {error ? (
+        {state?.error ? (
           <p className="rounded-sm border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">
-            {error}
+            {state.error}
           </p>
         ) : null}
 
         <button
           type="submit"
-          disabled={loading}
+          disabled={pending}
           className="w-full bg-ayuda-blue py-3.5 font-[family-name:var(--font-poppins)] text-sm font-semibold uppercase tracking-wide !text-white transition-colors hover:bg-ayuda-blue-dark disabled:opacity-60"
         >
-          {loading ? "Creating account…" : "Sign up"}
+          {pending ? "Creating account…" : "Sign up"}
         </button>
       </form>
     </DonorPortalShell>

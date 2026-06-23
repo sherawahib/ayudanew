@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useActionState, useState } from "react";
+import { loginAction } from "@/app/donors/sign-in/actions";
 import DonorPortalShell from "@/components/donors/DonorPortalShell";
 import SocialAuthButtons, { inputClass } from "@/components/donors/SocialAuthButtons";
 
@@ -13,52 +12,38 @@ function authErrorMessage(code: string | null) {
       return "Invalid email or password. Please try again.";
     case "admin_access_denied":
       return "Your account does not have admin access. Ask an administrator to add your email to ADMIN_EMAILS.";
-    case "registered":
-      return "Account created successfully. Please log in with your email and password.";
     default:
       return code ? "Unable to sign in. Please try again." : null;
   }
 }
 
-export default function SignInForm() {
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") ?? "/donors/dashboard";
-  const [email, setEmail] = useState(searchParams.get("email") ?? "");
+type SignInFormProps = {
+  callbackUrl: string;
+  initialEmail?: string;
+  initialError?: string | null;
+  registered?: boolean;
+};
+
+export default function SignInForm({
+  callbackUrl,
+  initialEmail = "",
+  initialError = null,
+  registered = false,
+}: SignInFormProps) {
+  const [email, setEmail] = useState(initialEmail);
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [state, formAction, pending] = useActionState(loginAction, null);
 
-  useEffect(() => {
-    const message =
-      authErrorMessage(searchParams.get("error")) ??
-      (searchParams.get("registered") === "1"
-        ? "Account created successfully. Please log in with your email and password."
-        : null);
-    if (message) {
-      setError(message);
-    }
-  }, [searchParams]);
+  const error =
+    state?.error ??
+    authErrorMessage(initialError) ??
+    (registered ? "Account created successfully. Please log in with your email and password." : null);
 
-  async function handleSubmit(event: FormEvent) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setLoading(true);
-    setError(null);
-
-    const result = await signIn("credentials", {
-      email: email.trim().toLowerCase(),
-      password,
-      redirect: false,
-    });
-
-    if (result?.error) {
-      setError(authErrorMessage(result.error) ?? "Invalid email or password. Please try again.");
-      setLoading(false);
-      return;
-    }
-
-    // Full page navigation ensures the session cookie is sent on the next request.
-    window.location.assign(callbackUrl);
+    const formData = new FormData(event.currentTarget);
+    formAction(formData);
   }
 
   return (
@@ -77,12 +62,15 @@ export default function SignInForm() {
       <SocialAuthButtons callbackUrl={callbackUrl} mode="sign-in" />
 
       <form onSubmit={handleSubmit} className="space-y-4">
+        <input type="hidden" name="callbackUrl" value={callbackUrl} />
+
         <div>
           <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-[#0f2d52]">
             Email
           </label>
           <input
             id="email"
+            name="email"
             type="email"
             autoComplete="email"
             required
@@ -98,6 +86,7 @@ export default function SignInForm() {
           </label>
           <input
             id="password"
+            name="password"
             type="password"
             autoComplete="current-password"
             required
@@ -130,10 +119,10 @@ export default function SignInForm() {
 
         <button
           type="submit"
-          disabled={loading}
+          disabled={pending}
           className="w-full bg-ayuda-blue py-3.5 font-[family-name:var(--font-poppins)] text-sm font-semibold uppercase tracking-wide !text-white transition-colors hover:bg-ayuda-blue-dark disabled:opacity-60"
         >
-          {loading ? "Signing in…" : "Log in"}
+          {pending ? "Signing in…" : "Log in"}
         </button>
       </form>
     </DonorPortalShell>

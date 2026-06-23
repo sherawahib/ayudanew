@@ -15,6 +15,7 @@ export const authConfig = {
   callbacks: {
     async jwt({ token, user, trigger, session }) {
       if (user?.id) {
+        token.sub = user.id;
         token.id = user.id;
         token.email = user.email;
         token.name = user.name;
@@ -41,7 +42,7 @@ export const authConfig = {
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id as string;
+        session.user.id = (token.id ?? token.sub) as string;
         session.user.email = token.email as string;
         session.user.name = token.name as string;
         session.user.image = (token.picture as string) ?? null;
