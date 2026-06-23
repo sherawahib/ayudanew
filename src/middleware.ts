@@ -1,11 +1,14 @@
-import { auth } from "@/auth";
+import NextAuth from "next-auth";
+import { authConfig } from "@/auth.config";
 import { isAdminEmail } from "@/lib/admin";
 import { NextResponse } from "next/server";
+
+const { auth } = NextAuth(authConfig);
 
 export default auth((request) => {
   const { pathname } = request.nextUrl;
   const isDashboard = pathname.startsWith("/donors/dashboard");
-  const isSignedIn = Boolean(request.auth);
+  const isSignedIn = Boolean(request.auth?.user?.id);
 
   if (isDashboard && !isSignedIn) {
     const signInUrl = new URL("/donors/sign-in", request.url);

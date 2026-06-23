@@ -56,12 +56,18 @@ export default function SignUpForm() {
         throw new Error(data.error ?? "Unable to create account.");
       }
 
-      await signIn("credentials", {
+      const signInResult = await signIn("credentials", {
         email: email.trim().toLowerCase(),
         password,
-        callbackUrl: "/donors/dashboard",
-        redirect: true,
+        redirect: false,
       });
+
+      if (signInResult?.error) {
+        router.push(`/donors/sign-in?registered=1&email=${encodeURIComponent(email.trim().toLowerCase())}`);
+        return;
+      }
+
+      window.location.assign("/donors/dashboard");
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "Something went wrong.");
     } finally {

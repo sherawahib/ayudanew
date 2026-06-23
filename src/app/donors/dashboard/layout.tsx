@@ -1,10 +1,17 @@
+import { auth } from "@/auth";
 import DonorDashboardNav from "@/components/donors/DonorDashboardNav";
+import { redirect } from "next/navigation";
 
-export default function DonorDashboardLayout({
+export default async function DonorDashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await auth();
+  if (!session?.user?.id) {
+    redirect("/donors/sign-in?callbackUrl=/donors/dashboard");
+  }
+
   return (
     <section className="bg-[#f4f8fc] py-10 md:py-14">
       <div className="container-ayuda max-w-6xl">

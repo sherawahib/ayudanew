@@ -5,6 +5,7 @@ import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Facebook from "next-auth/providers/facebook";
 import Google from "next-auth/providers/google";
+import { authConfig } from "@/auth.config";
 import { prisma } from "@/lib/prisma";
 
 export type DonorSessionUser = {
@@ -19,38 +20,6 @@ export type DonorSessionUser = {
   postAmount?: boolean;
   postName?: boolean;
 };
-
-async function loadUserTokenFields(userId: string) {
-  return prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      firstName: true,
-      lastName: true,
-      name: true,
-      email: true,
-      image: true,
-      accountType: true,
-      orgName: true,
-      postAmount: true,
-      postName: true,
-    },
-  });
-}
-
-function applyDbUserToToken(
-  token: Record<string, unknown>,
-  dbUser: NonNullable<Awaited<ReturnType<typeof loadUserTokenFields>>>,
-) {
-  token.email = dbUser.email;
-  token.name = dbUser.name ?? `${dbUser.firstName ?? ""} ${dbUser.lastName ?? ""}`.trim();
-  token.firstName = dbUser.firstName;
-  token.lastName = dbUser.lastName;
-  token.picture = dbUser.image;
-  token.accountType = dbUser.accountType;
-  token.orgName = dbUser.orgName;
-  token.postAmount = dbUser.postAmount;
-  token.postName = dbUser.postName;
-}
 
 const providers: NextAuthConfig["providers"] = [
   Credentials({
@@ -83,6 +52,12 @@ const providers: NextAuthConfig["providers"] = [
           email: user.email,
           name: user.name ?? `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim(),
           image: user.image,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          accountType: user.accountType,
+          orgName: user.orgName,
+          postAmount: user.postAmount,
+          postName: user.postName,
         };
       } catch (error) {
         console.error("Credentials authorize failed:", error);
@@ -112,63 +87,12 @@ if (process.env.FACEBOOK_CLIENT_ID && process.env.FACEBOOK_CLIENT_SECRET) {
   );
 }
 
-const authConfig = {
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
   adapter: PrismaAdapter(prisma),
-  secret: process.env.AUTH_SECRET,
-  session: { strategy: "jwt" },
-  pages: {
-    signIn: "/donors/sign-in",
-    newUser: "/donors/dashboard",
-  },
   providers,
   callbacks: {
-    async jwt({ token, user, trigger, session }) {
-      // Only hit the database on sign-in or explicit session updates — never on
-      // every middleware read (Edge runtime cannot run Prisma).
-      if (user?.id) {
-        token.id = user.id;
-        token.email = user.email;
-        token.name = user.name;
-        token.picture = user.image;
-
-        const dbUser = await loadUserTokenFields(user.id);
-        if (dbUser) {
-          applyDbUserToToken(token, dbUser);
-        }
-      }
-
-      if (trigger === "update" && session?.user && token.id) {
-        token.name = session.user.name;
-        token.firstName = session.user.firstName;
-        token.lastName = session.user.lastName;
-        token.accountType = session.user.accountType;
-        token.orgName = session.user.orgName;
-        token.postAmount = session.user.postAmount;
-        token.postName = session.user.postName;
-
-        const dbUser = await loadUserTokenFields(token.id as string);
-        if (dbUser) {
-          applyDbUserToToken(token, dbUser);
-        }
-      }
-
-      return token;
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
-        session.user.email = token.email as string;
-        session.user.name = token.name as string;
-        session.user.image = (token.picture as string) ?? null;
-        session.user.firstName = token.firstName as string | null;
-        session.user.lastName = token.lastName as string | null;
-        session.user.accountType = token.accountType as string;
-        session.user.orgName = token.orgName as string | null;
-        session.user.postAmount = token.postAmount as boolean;
-        session.user.postName = token.postName as boolean;
-      }
-      return session;
-    },
+    ...authConfig.callbacks,
     async signIn({ user, account }) {
       if (account?.provider === "credentials") {
         return true;
@@ -198,7 +122,4 @@ const authConfig = {
       return true;
     },
   },
-  trustHost: true,
-} satisfies NextAuthConfig;
-
-export const { handlers, auth, signIn, signOut } = NextAuth(authConfig);
+});

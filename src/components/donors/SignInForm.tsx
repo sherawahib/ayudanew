@@ -45,17 +45,20 @@ export default function SignInForm() {
     setLoading(true);
     setError(null);
 
-    try {
-      await signIn("credentials", {
-        email: email.trim().toLowerCase(),
-        password,
-        callbackUrl,
-        redirect: true,
-      });
-    } catch {
-      setError("Unable to sign in right now. Please try again.");
+    const result = await signIn("credentials", {
+      email: email.trim().toLowerCase(),
+      password,
+      redirect: false,
+    });
+
+    if (result?.error) {
+      setError(authErrorMessage(result.error) ?? "Invalid email or password. Please try again.");
       setLoading(false);
+      return;
     }
+
+    // Full page navigation ensures the session cookie is sent on the next request.
+    window.location.assign(callbackUrl);
   }
 
   return (
