@@ -2,41 +2,60 @@
 
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { FormEvent, useEffect, useState } from "react";
 import DonorPortalShell from "@/components/donors/DonorPortalShell";
 import SocialAuthButtons, { inputClass } from "@/components/donors/SocialAuthButtons";
 
+function authErrorMessage(code: string | null) {
+  switch (code) {
+    case "CredentialsSignin":
+      return "Invalid email or password. Please try again.";
+    case "admin_access_denied":
+      return "Your account does not have admin access. Ask an administrator to add your email to ADMIN_EMAILS.";
+    case "registered":
+      return "Account created successfully. Please log in with your email and password.";
+    default:
+      return code ? "Unable to sign in. Please try again." : null;
+  }
+}
+
 export default function SignInForm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") ?? "/donors/dashboard";
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(searchParams.get("email") ?? "");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const message =
+      authErrorMessage(searchParams.get("error")) ??
+      (searchParams.get("registered") === "1"
+        ? "Account created successfully. Please log in with your email and password."
+        : null);
+    if (message) {
+      setError(message);
+    }
+  }, [searchParams]);
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     setLoading(true);
     setError(null);
 
-    const result = await signIn("credentials", {
-      email: email.trim().toLowerCase(),
-      password,
-      redirect: false,
-    });
-
-    setLoading(false);
-
-    if (result?.error) {
-      setError("Invalid email or password. Please try again.");
-      return;
+    try {
+      await signIn("credentials", {
+        email: email.trim().toLowerCase(),
+        password,
+        callbackUrl,
+        redirect: true,
+      });
+    } catch {
+      setError("Unable to sign in right now. Please try again.");
+      setLoading(false);
     }
-
-    router.push(callbackUrl);
-    router.refresh();
   }
 
   return (
@@ -52,6 +71,8 @@ export default function SignInForm() {
         </>
       }
     >
+      <SocialAuthButtons callbackUrl={callbackUrl} mode="sign-in" />
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-[#0f2d52]">
@@ -107,15 +128,11 @@ export default function SignInForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-ayuda-blue py-3.5 font-[family-name:var(--font-poppins)] text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-ayuda-blue-dark disabled:opacity-60"
+          className="w-full bg-ayuda-blue py-3.5 font-[family-name:var(--font-poppins)] text-sm font-semibold uppercase tracking-wide !text-white transition-colors hover:bg-ayuda-blue-dark disabled:opacity-60"
         >
           {loading ? "Signing in…" : "Log in"}
         </button>
       </form>
-
-      <div className="mt-6">
-        <SocialAuthButtons />
-      </div>
     </DonorPortalShell>
   );
 }

@@ -43,7 +43,7 @@ export default function DonateSection() {
           <div className="flex flex-col items-center gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
             <div className="max-w-3xl text-center lg:text-left">
               <span
-                className="mb-3 block font-[family-name:var(--font-lora)] text-5xl leading-none text-white/30 md:text-6xl"
+                className="mb-3 block font-[family-name:var(--font-lora)] text-4xl leading-none text-white/30 sm:text-5xl md:text-6xl"
                 aria-hidden
               >
                 &ldquo;
@@ -59,7 +59,7 @@ export default function DonateSection() {
             <div className="shrink-0">
               <Link
                 href={SITE.donatePageUrl}
-                className="group relative inline-flex items-center gap-3 overflow-hidden bg-ayuda-blue px-10 py-4 font-[family-name:var(--font-poppins)] text-sm font-bold uppercase tracking-[0.15em] text-white shadow-[0_8px_30px_rgba(18,97,171,0.45)] transition-colors duration-300 hover:bg-ayuda-blue-dark"
+                className="group relative inline-flex w-full items-center justify-center gap-3 overflow-hidden bg-ayuda-blue px-8 py-4 font-[family-name:var(--font-poppins)] text-sm font-bold uppercase tracking-[0.15em] !text-white shadow-[0_8px_30px_rgba(18,97,171,0.45)] transition-colors duration-300 hover:bg-ayuda-blue-dark sm:w-auto sm:px-10"
               >
                 <span className="relative z-10">Donate Now</span>
                 <svg

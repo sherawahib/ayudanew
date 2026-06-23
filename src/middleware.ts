@@ -14,7 +14,13 @@ export default auth((request) => {
   }
 
   if ((pathname === "/donors/sign-in" || pathname === "/donors/sign-up") && isSignedIn) {
-    return NextResponse.redirect(new URL("/donors/dashboard", request.url));
+    const callbackUrl = request.nextUrl.searchParams.get("callbackUrl") ?? "";
+    const needsAdmin = callbackUrl.startsWith("/admin");
+    const isAdmin = isAdminEmail(request.auth?.user?.email);
+
+    if (!needsAdmin || isAdmin) {
+      return NextResponse.redirect(new URL("/donors/dashboard", request.url));
+    }
   }
 
   const isAdminRoute = pathname.startsWith("/admin");
@@ -29,5 +35,12 @@ export default auth((request) => {
 });
 
 export const config = {
-  matcher: ["/donors/dashboard/:path*", "/donors/sign-in", "/donors/sign-up", "/admin/:path*"],
+  matcher: [
+    "/donors/dashboard",
+    "/donors/dashboard/:path*",
+    "/donors/sign-in",
+    "/donors/sign-up",
+    "/admin",
+    "/admin/:path*",
+  ],
 };

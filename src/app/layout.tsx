@@ -1,14 +1,20 @@
-import type { Metadata } from "next";
-import Footer from "@/components/Footer";
-import BackgroundMusic from "@/components/BackgroundMusic";
-import Header from "@/components/Header";
+import type { Metadata, Viewport } from "next";
+import {
+  PublicSiteExtras,
+  PublicSiteFooter,
+  PublicSiteHeader,
+} from "@/components/PublicSiteChrome";
 import AuthSessionProvider from "@/components/providers/AuthSessionProvider";
-import { BackToTop, FloatingDonate } from "@/components/SiteChrome";
 import { SITE } from "@/lib/site";
 import "./globals.css";
 
 const GOOGLE_FONTS_URL =
   "https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&family=Lora:wght@400;500;600;700&family=Catamaran:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   title: {
@@ -36,12 +42,10 @@ export default function RootLayout({
       </head>
       <body className="min-h-full bg-white text-black antialiased" id="top">
         <AuthSessionProvider>
-          <Header />
+          <PublicSiteHeader />
           <main className="flex-1">{children}</main>
-          <Footer />
-          <BackgroundMusic />
-          <BackToTop />
-          <FloatingDonate />
+          <PublicSiteFooter />
+          <PublicSiteExtras />
         </AuthSessionProvider>
       </body>
     </html>

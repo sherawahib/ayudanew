@@ -56,19 +56,12 @@ export default function SignUpForm() {
         throw new Error(data.error ?? "Unable to create account.");
       }
 
-      const signInResult = await signIn("credentials", {
+      await signIn("credentials", {
         email: email.trim().toLowerCase(),
         password,
-        redirect: false,
+        callbackUrl: "/donors/dashboard",
+        redirect: true,
       });
-
-      if (signInResult?.error) {
-        router.push("/donors/sign-in");
-        return;
-      }
-
-      router.push("/donors/dashboard");
-      router.refresh();
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : "Something went wrong.");
     } finally {
@@ -89,6 +82,8 @@ export default function SignUpForm() {
         </>
       }
     >
+      <SocialAuthButtons mode="sign-up" />
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <fieldset>
           <legend className="mb-2 text-sm font-medium text-[#0f2d52]">
@@ -214,15 +209,11 @@ export default function SignUpForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-ayuda-blue py-3.5 font-[family-name:var(--font-poppins)] text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-ayuda-blue-dark disabled:opacity-60"
+          className="w-full bg-ayuda-blue py-3.5 font-[family-name:var(--font-poppins)] text-sm font-semibold uppercase tracking-wide !text-white transition-colors hover:bg-ayuda-blue-dark disabled:opacity-60"
         >
           {loading ? "Creating account…" : "Sign up"}
         </button>
       </form>
-
-      <div className="mt-6">
-        <SocialAuthButtons />
-      </div>
     </DonorPortalShell>
   );
 }

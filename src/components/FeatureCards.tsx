@@ -15,7 +15,7 @@ export default function FeatureCards() {
             height={66}
           />
         </div>
-        <h2 className="mb-12 text-center text-3xl text-black md:text-4xl">
+        <h2 className="mb-12 text-center text-2xl text-black sm:text-3xl md:text-4xl">
           Learn about Ayuda Miami
         </h2>
 

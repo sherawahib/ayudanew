@@ -36,6 +36,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -44,6 +45,7 @@ body {
   font-family: var(--font-raleway), Arial, Helvetica, sans-serif;
   font-size: 15px;
   line-height: 1.7;
+  overflow-x: hidden;
 }
 
 h1,
@@ -67,21 +69,42 @@ a {
   max-width: 1100px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+@media (min-width: 640px) {
+  .container-ayuda {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-ayuda {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
 }
 
 .btn-ayuda {
   display: inline-block;
   font-family: var(--font-poppins), sans-serif;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  padding: 12px 35px;
+  padding: 10px 24px;
   border: 1px solid #ffffff;
   transition: all 0.3s ease;
   cursor: pointer;
+}
+
+@media (min-width: 640px) {
+  .btn-ayuda {
+    font-size: 14px;
+    padding: 12px 35px;
+  }
 }
 
 .btn-ayuda-primary {
@@ -213,6 +236,13 @@ a {
   height: 44px;
 }
 
+@media (max-width: 639px) {
+  .hero-swiper .swiper-button-next,
+  .hero-swiper .swiper-button-prev {
+    display: none;
+  }
+}
+
 .hero-swiper .swiper-button-next:after,
 .hero-swiper .swiper-button-prev:after {
   font-size: 22px;
@@ -227,13 +257,28 @@ a {
   display: inline-block;
   border: 1px solid #ffffff;
   font-family: var(--font-poppins), sans-serif;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   line-height: 1.2;
   text-transform: uppercase;
   letter-spacing: 0.02em;
-  padding: 12px 35px;
+  padding: 10px 20px;
+  text-align: center;
   transition: all 0.3s ease;
+}
+
+@media (min-width: 640px) {
+  .hero-btn {
+    font-size: 13px;
+    padding: 11px 28px;
+  }
+}
+
+@media (min-width: 768px) {
+  .hero-btn {
+    font-size: 14px;
+    padding: 12px 35px;
+  }
 }
 
 .hero-btn-gray {

@@ -18,7 +18,7 @@ export function BackToTop() {
   return (
     <a
       href="#top"
-      className="fixed bottom-24 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-ayuda-blue text-white shadow-lg transition-transform hover:scale-105"
+      className="fixed bottom-[5.5rem] right-4 z-40 flex h-11 w-11 items-center justify-center rounded-full bg-ayuda-blue text-white shadow-lg transition-transform hover:scale-105 sm:bottom-24 sm:right-6"
       aria-label="Back to top"
     >
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -32,7 +32,7 @@ export function FloatingDonate() {
   return (
     <Link
       href={SITE.donateUrl}
-      className="fixed bottom-6 right-6 z-40 rounded-full bg-ayuda-blue-deep px-5 py-3 font-[family-name:var(--font-poppins)] text-xs font-bold uppercase tracking-wide text-white shadow-xl transition-transform hover:scale-105"
+      className="fixed bottom-4 right-4 z-40 rounded-full bg-ayuda-blue-deep px-4 py-2.5 font-[family-name:var(--font-poppins)] text-[11px] font-bold uppercase tracking-wide !text-white shadow-xl transition-transform hover:scale-105 sm:bottom-6 sm:right-6 sm:px-5 sm:py-3 sm:text-xs"
     >
       Donate
     </Link>

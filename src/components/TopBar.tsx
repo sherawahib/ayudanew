@@ -5,9 +5,9 @@ import { SITE, SOCIAL_LINKS } from "@/lib/site";
 export default function TopBar() {
   return (
     <div className="bg-ayuda-blue-dark text-white">
-      <div className="container-ayuda max-w-7xl">
-        <div className="flex h-9 items-center justify-between gap-4 sm:h-10">
-          <p className="hidden text-xs text-white/80 sm:block">
+      <div className="container-ayuda">
+        <div className="flex h-9 items-center justify-between gap-2 sm:h-10 sm:gap-4">
+          <p className="truncate text-[10px] text-white/80 sm:text-xs">
             {SITE.tagline}
           </p>
 

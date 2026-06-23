@@ -53,7 +53,7 @@ export default function Footer() {
         <div className="pointer-events-none absolute -right-24 -top-24 h-64 w-64 rounded-full bg-ayuda-blue/[0.04]" />
         <div className="pointer-events-none absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-[#00b388]/[0.06]" />
 
-        <div className="container-ayuda relative py-14 md:py-18 lg:py-20">
+        <div className="container-ayuda relative py-12 sm:py-14 md:py-16 lg:py-20">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
             {/* Brand column */}
             <div className="lg:col-span-4">
@@ -143,7 +143,7 @@ export default function Footer() {
                 </ContactItem>
                 <Link
                   href={SITE.donatePageUrl}
-                  className="mt-2 inline-flex items-center gap-2 bg-ayuda-blue px-5 py-2.5 text-xs font-bold uppercase tracking-[0.15em] text-white shadow-md transition-all hover:-translate-y-0.5 hover:bg-ayuda-blue-dark hover:shadow-lg"
+                  className="mt-2 inline-flex items-center gap-2 bg-ayuda-blue px-5 py-2.5 text-xs font-bold uppercase tracking-[0.15em] !text-white shadow-md transition-all hover:-translate-y-0.5 hover:bg-ayuda-blue-dark hover:shadow-lg"
                 >
                   Donate Today
                   <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>

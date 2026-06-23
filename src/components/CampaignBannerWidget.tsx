@@ -79,7 +79,7 @@ function ShareButtons({ slug, title }: { slug: string; title: string }) {
 
 function CampaignCard({ campaign }: { campaign: CampaignStats }) {
   return (
-    <div className="w-[300px] rounded-2xl bg-[#2c343a] p-5 text-white shadow-[0_20px_50px_rgba(0,0,0,0.35)] sm:w-[320px]">
+    <div className="w-full max-w-[320px] rounded-2xl bg-[#2c343a] p-4 text-white shadow-[0_20px_50px_rgba(0,0,0,0.35)] sm:p-5">
       <p className="mb-4 line-clamp-2 text-sm font-medium text-white/85">{campaign.title}</p>
 
       <div className="mb-5 h-2 overflow-hidden rounded-full bg-white/20">
@@ -90,22 +90,22 @@ function CampaignCard({ campaign }: { campaign: CampaignStats }) {
       </div>
 
       <div className="mb-6">
-        <p className="text-4xl font-semibold leading-none tracking-tight">
+        <p className="text-3xl font-semibold leading-none tracking-tight sm:text-4xl">
           {formatCampaignMoney(campaign.raisedCents)}
         </p>
-        <p className="mt-2 text-sm text-white/75">
+        <p className="mt-2 text-xs text-white/75 sm:text-sm">
           raised towards {formatCampaignMoney(campaign.goalCents)} goal
         </p>
       </div>
 
-      <div className="mb-6 grid grid-cols-2 gap-4 border-t border-white/10 pt-5">
+      <div className="mb-6 grid grid-cols-2 gap-3 border-t border-white/10 pt-5 sm:gap-4">
         <div>
-          <p className="text-3xl font-semibold leading-none">{campaign.supporters}</p>
-          <p className="mt-1 text-sm text-white/70">Supporters</p>
+          <p className="text-2xl font-semibold leading-none sm:text-3xl">{campaign.supporters}</p>
+          <p className="mt-1 text-xs text-white/70 sm:text-sm">Supporters</p>
         </div>
         <div>
-          <p className="text-3xl font-semibold leading-none">{campaign.daysLeft}</p>
-          <p className="mt-1 text-sm text-white/70">Days Left</p>
+          <p className="text-2xl font-semibold leading-none sm:text-3xl">{campaign.daysLeft}</p>
+          <p className="mt-1 text-xs text-white/70 sm:text-sm">Days Left</p>
         </div>
       </div>
 

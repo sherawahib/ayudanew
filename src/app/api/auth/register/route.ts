@@ -42,33 +42,41 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Organization name is required." }, { status: 400 });
   }
 
-  const existing = await prisma.user.findUnique({ where: { email } });
-  if (existing) {
-    return NextResponse.json({ error: "An account with this email already exists." }, { status: 409 });
+  try {
+    const existing = await prisma.user.findUnique({ where: { email } });
+    if (existing) {
+      return NextResponse.json({ error: "An account with this email already exists." }, { status: 409 });
+    }
+
+    const passwordHash = await bcrypt.hash(password, 12);
+    const displayName =
+      accountType === "organization" && orgName
+        ? orgName
+        : `${firstName} ${lastName}`.trim();
+
+    const user = await prisma.user.create({
+      data: {
+        email,
+        passwordHash,
+        firstName,
+        lastName,
+        name: displayName,
+        accountType,
+        orgName: accountType === "organization" ? orgName : null,
+      },
+    });
+
+    await prisma.donation.updateMany({
+      where: { donorEmail: email, userId: null },
+      data: { userId: user.id },
+    });
+
+    return NextResponse.json({ success: true, email });
+  } catch (error) {
+    console.error("Registration failed:", error);
+    return NextResponse.json(
+      { error: "Unable to create account right now. Please try again in a moment." },
+      { status: 500 },
+    );
   }
-
-  const passwordHash = await bcrypt.hash(password, 12);
-  const displayName =
-    accountType === "organization" && orgName
-      ? orgName
-      : `${firstName} ${lastName}`.trim();
-
-  const user = await prisma.user.create({
-    data: {
-      email,
-      passwordHash,
-      firstName,
-      lastName,
-      name: displayName,
-      accountType,
-      orgName: accountType === "organization" ? orgName : null,
-    },
-  });
-
-  await prisma.donation.updateMany({
-    where: { donorEmail: email, userId: null },
-    data: { userId: user.id },
-  });
-
-  return NextResponse.json({ success: true });
 }

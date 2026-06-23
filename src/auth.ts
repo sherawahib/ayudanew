@@ -20,6 +20,38 @@ export type DonorSessionUser = {
   postName?: boolean;
 };
 
+async function loadUserTokenFields(userId: string) {
+  return prisma.user.findUnique({
+    where: { id: userId },
+    select: {
+      firstName: true,
+      lastName: true,
+      name: true,
+      email: true,
+      image: true,
+      accountType: true,
+      orgName: true,
+      postAmount: true,
+      postName: true,
+    },
+  });
+}
+
+function applyDbUserToToken(
+  token: Record<string, unknown>,
+  dbUser: NonNullable<Awaited<ReturnType<typeof loadUserTokenFields>>>,
+) {
+  token.email = dbUser.email;
+  token.name = dbUser.name ?? `${dbUser.firstName ?? ""} ${dbUser.lastName ?? ""}`.trim();
+  token.firstName = dbUser.firstName;
+  token.lastName = dbUser.lastName;
+  token.picture = dbUser.image;
+  token.accountType = dbUser.accountType;
+  token.orgName = dbUser.orgName;
+  token.postAmount = dbUser.postAmount;
+  token.postName = dbUser.postName;
+}
+
 const providers: NextAuthConfig["providers"] = [
   Credentials({
     name: "Email",
@@ -28,29 +60,34 @@ const providers: NextAuthConfig["providers"] = [
       password: { label: "Password", type: "password" },
     },
     async authorize(credentials) {
-      const email = credentials?.email?.toString().trim().toLowerCase();
-      const password = credentials?.password?.toString();
+      try {
+        const email = credentials?.email?.toString().trim().toLowerCase();
+        const password = credentials?.password?.toString();
 
-      if (!email || !password) {
+        if (!email || !password) {
+          return null;
+        }
+
+        const user = await prisma.user.findUnique({ where: { email } });
+        if (!user?.passwordHash) {
+          return null;
+        }
+
+        const valid = await bcrypt.compare(password, user.passwordHash);
+        if (!valid) {
+          return null;
+        }
+
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name ?? `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim(),
+          image: user.image,
+        };
+      } catch (error) {
+        console.error("Credentials authorize failed:", error);
         return null;
       }
-
-      const user = await prisma.user.findUnique({ where: { email } });
-      if (!user?.passwordHash) {
-        return null;
-      }
-
-      const valid = await bcrypt.compare(password, user.passwordHash);
-      if (!valid) {
-        return null;
-      }
-
-      return {
-        id: user.id,
-        email: user.email,
-        name: user.name ?? `${user.firstName ?? ""} ${user.lastName ?? ""}`.trim(),
-        image: user.image,
-      };
     },
   }),
 ];
@@ -77,6 +114,7 @@ if (process.env.FACEBOOK_CLIENT_ID && process.env.FACEBOOK_CLIENT_SECRET) {
 
 const authConfig = {
   adapter: PrismaAdapter(prisma),
+  secret: process.env.AUTH_SECRET,
   session: { strategy: "jwt" },
   pages: {
     signIn: "/donors/sign-in",
@@ -85,11 +123,21 @@ const authConfig = {
   providers,
   callbacks: {
     async jwt({ token, user, trigger, session }) {
+      // Only hit the database on sign-in or explicit session updates — never on
+      // every middleware read (Edge runtime cannot run Prisma).
       if (user?.id) {
         token.id = user.id;
+        token.email = user.email;
+        token.name = user.name;
+        token.picture = user.image;
+
+        const dbUser = await loadUserTokenFields(user.id);
+        if (dbUser) {
+          applyDbUserToToken(token, dbUser);
+        }
       }
 
-      if (trigger === "update" && session?.user) {
+      if (trigger === "update" && session?.user && token.id) {
         token.name = session.user.name;
         token.firstName = session.user.firstName;
         token.lastName = session.user.lastName;
@@ -97,34 +145,10 @@ const authConfig = {
         token.orgName = session.user.orgName;
         token.postAmount = session.user.postAmount;
         token.postName = session.user.postName;
-      }
 
-      if (token.id) {
-        const dbUser = await prisma.user.findUnique({
-          where: { id: token.id as string },
-          select: {
-            firstName: true,
-            lastName: true,
-            name: true,
-            email: true,
-            image: true,
-            accountType: true,
-            orgName: true,
-            postAmount: true,
-            postName: true,
-          },
-        });
-
+        const dbUser = await loadUserTokenFields(token.id as string);
         if (dbUser) {
-          token.email = dbUser.email;
-          token.name = dbUser.name ?? `${dbUser.firstName ?? ""} ${dbUser.lastName ?? ""}`.trim();
-          token.firstName = dbUser.firstName;
-          token.lastName = dbUser.lastName;
-          token.picture = dbUser.image;
-          token.accountType = dbUser.accountType;
-          token.orgName = dbUser.orgName;
-          token.postAmount = dbUser.postAmount;
-          token.postName = dbUser.postName;
+          applyDbUserToToken(token, dbUser);
         }
       }
 

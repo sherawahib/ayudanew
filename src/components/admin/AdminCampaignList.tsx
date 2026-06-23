@@ -139,7 +139,7 @@ export default function AdminCampaignList() {
                   </div>
                 </div>
 
-                <div className="mt-5 flex gap-3 border-t border-black/5 pt-4">
+                <div className="mt-5 flex flex-wrap gap-3 border-t border-black/5 pt-4">
                   <Link
                     href={`/admin/campaigns/${campaign.id}/edit`}
                     className="text-sm font-medium text-[#1261ab] hover:underline"
@@ -156,7 +156,7 @@ export default function AdminCampaignList() {
                   <button
                     type="button"
                     onClick={() => handleDelete(campaign.id, campaign.title)}
-                    className="ml-auto text-sm text-red-600 hover:underline"
+                    className="text-sm text-red-600 hover:underline sm:ml-auto"
                   >
                     Delete
                   </button>

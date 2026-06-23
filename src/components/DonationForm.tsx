@@ -97,7 +97,7 @@ function PaymentFormInner({
         <button
           type="submit"
           disabled={!stripe || processing}
-          className="inline-flex items-center justify-center bg-ayuda-blue px-10 py-4 font-[family-name:var(--font-poppins)] text-sm font-bold uppercase tracking-[0.12em] text-white transition-colors hover:bg-ayuda-blue-dark disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex w-full items-center justify-center bg-ayuda-blue px-8 py-4 font-[family-name:var(--font-poppins)] text-sm font-bold uppercase tracking-[0.12em] text-white transition-colors hover:bg-ayuda-blue-dark disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:px-10"
         >
           {processing ? "Processing…" : `Complete donation ${formatCurrency(amount)}`}
         </button>

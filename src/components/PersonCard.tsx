@@ -10,7 +10,7 @@ type PersonCardProps = {
 export default function PersonCard({ name, role, bio, image }: PersonCardProps) {
   return (
     <article className="flex flex-col gap-6 border-b border-black/10 pb-10 last:border-0 md:flex-row">
-      <div className="relative mx-auto h-[280px] w-[220px] shrink-0 overflow-hidden bg-[#f5f5f5] md:mx-0">
+      <div className="relative mx-auto h-[240px] w-full max-w-[220px] shrink-0 overflow-hidden bg-[#f5f5f5] sm:h-[280px] md:mx-0">
         <ContentImage
           src={image}
           alt={name}

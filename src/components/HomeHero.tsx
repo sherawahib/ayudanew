@@ -30,7 +30,7 @@ function HeroButton({
       href={href}
       target={external ? "_blank" : undefined}
       rel={external ? "noopener noreferrer" : undefined}
-      className={BUTTON_CLASS[variant]}
+      className={`${BUTTON_CLASS[variant]} w-full sm:w-auto`}
     >
       {label}
     </Link>
@@ -69,23 +69,23 @@ export default function HomeHero() {
 
       <div className="absolute inset-0 bg-black/35" />
 
-      <div className="container-ayuda relative z-10 flex h-full items-center justify-center px-5">
+      <div className="container-ayuda relative z-10 flex h-full min-h-[inherit] items-center justify-center">
         <div className="flex w-full max-w-6xl flex-col items-center justify-center gap-8 md:flex-row md:items-center md:gap-10 lg:gap-14">
-          <div className="max-w-xl text-center md:flex-1 md:text-left">
+          <div className="w-full max-w-xl text-center md:flex-1 md:text-left">
             {slide.subtitle && (
-              <p className="font-[family-name:var(--font-poppins)] text-xl font-bold leading-tight tracking-tight text-white drop-shadow-md sm:text-2xl md:text-3xl lg:text-[2rem] lg:leading-[1.2]">
+              <p className="font-[family-name:var(--font-poppins)] text-lg font-bold leading-tight tracking-tight text-white drop-shadow-md sm:text-2xl md:text-3xl lg:text-[2rem] lg:leading-[1.2]">
                 {slide.subtitle}
               </p>
             )}
 
-            <div className="mt-5 flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap md:items-start">
+            <div className="mt-5 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center md:items-start">
               {slide.buttons.map((button) => (
                 <HeroButton key={button.label} {...button} />
               ))}
             </div>
           </div>
 
-          <div className="shrink-0">
+          <div className="w-full max-w-[320px] shrink-0 md:w-auto">
             <CampaignBannerPanel />
           </div>
         </div>

@@ -10,8 +10,12 @@ export default async function AdminLayout({
 }) {
   const session = await auth();
 
-  if (!session?.user?.email || !isAdminEmail(session.user.email)) {
+  if (!session?.user?.email) {
     redirect("/donors/sign-in?callbackUrl=/admin");
+  }
+
+  if (!isAdminEmail(session.user.email)) {
+    redirect("/donors/dashboard?error=admin_access_denied");
   }
 
   return (

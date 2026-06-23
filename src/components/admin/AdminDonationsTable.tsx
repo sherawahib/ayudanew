@@ -72,7 +72,7 @@ export default function AdminDonationsTable({
         }
       />
 
-      <div className="grid gap-4 sm:grid-cols-4">
+      <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
         {[
           { label: "Total value", value: formatAdminMoney(summary.totalCents) },
           { label: "Completed", value: String(summary.completed) },
@@ -87,7 +87,7 @@ export default function AdminDonationsTable({
       </div>
 
       <div className="rounded-xl border border-black/5 bg-white p-4 shadow-sm">
-        <div className="grid gap-3 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <input
             type="search"
             placeholder="Search donor, email, campaign…"
@@ -129,7 +129,55 @@ export default function AdminDonationsTable({
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-black/5 bg-white shadow-sm">
+      {/* Mobile card list */}
+      <div className="space-y-3 md:hidden">
+        {loading ? (
+          <p className="rounded-xl border border-black/5 bg-white px-4 py-8 text-center text-sm text-[#5a6b7d]">
+            Loading donations…
+          </p>
+        ) : donations.length === 0 ? (
+          <p className="rounded-xl border border-black/5 bg-white px-4 py-8 text-center text-sm text-[#5a6b7d]">
+            No donations found.
+          </p>
+        ) : (
+          donations.map((donation) => (
+            <article
+              key={donation.id}
+              className="rounded-xl border border-black/5 bg-white p-4 shadow-sm"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="font-medium text-[#0f2d52]">
+                    {[donation.donorFirstName, donation.donorLastName]
+                      .filter(Boolean)
+                      .join(" ") || "—"}
+                  </p>
+                  <p className="text-xs text-[#5a6b7d]">{donation.donorEmail}</p>
+                </div>
+                <p className="shrink-0 font-semibold text-[#0f2d52]">
+                  {formatAdminMoney(donation.amount)}
+                </p>
+              </div>
+              <div className="mt-3 space-y-1.5 text-xs text-[#5a6b7d]">
+                <p>
+                  <span className="font-medium text-[#0f2d52]">Campaign:</span>{" "}
+                  {donation.campaign?.title ?? "—"}
+                </p>
+                <p>
+                  <span className="font-medium text-[#0f2d52]">Status:</span>{" "}
+                  <span className="capitalize">{donation.status}</span>
+                </p>
+                <p>
+                  <span className="font-medium text-[#0f2d52]">Date:</span>{" "}
+                  {formatAdminDate(donation.createdAt)}
+                </p>
+              </div>
+            </article>
+          ))
+        )}
+      </div>
+
+      <div className="hidden overflow-hidden rounded-xl border border-black/5 bg-white shadow-sm md:block">
         <div className="overflow-x-auto">
           <table className="min-w-full text-left text-sm">
             <thead className="bg-[#f8fafc] text-xs uppercase tracking-wider text-[#5a6b7d]">

@@ -8,11 +8,23 @@ export const metadata: Metadata = {
   robots: { index: false },
 };
 
-export default async function DonorDashboardPage() {
+type DonorDashboardPageProps = {
+  searchParams: Promise<{ error?: string }>;
+};
+
+export default async function DonorDashboardPage({ searchParams }: DonorDashboardPageProps) {
   const session = await auth();
+  const params = await searchParams;
+  const adminDenied = params.error === "admin_access_denied";
 
   return (
     <div className="space-y-8">
+      {adminDenied ? (
+        <p className="rounded-sm border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900" role="alert">
+          This account does not have admin access. To use the admin panel, add your email to{" "}
+          <code className="text-xs">ADMIN_EMAILS</code> in the site environment settings.
+        </p>
+      ) : null}
       <div className="rounded-md border border-black/10 bg-white p-6 shadow-sm md:p-8">
         <p className="text-xs font-semibold uppercase tracking-wider text-ayuda-blue">
           Welcome back
