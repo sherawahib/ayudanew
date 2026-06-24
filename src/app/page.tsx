@@ -1,5 +1,6 @@
 import DonateSection from "@/components/DonateSection";
 import FeatureCards from "@/components/FeatureCards";
+import HomeCommunityAmbassadors from "@/components/HomeCommunityAmbassadors";
 import HomeHero from "@/components/HomeHero";
 import HomeVideos from "@/components/HomeVideos";
 import MayorMessageSection from "@/components/MayorMessageSection";
@@ -10,6 +11,7 @@ export default function HomePage() {
       <HomeHero />
       <MayorMessageSection />
       <FeatureCards />
+      <HomeCommunityAmbassadors />
       <DonateSection />
       <HomeVideos />
     </>

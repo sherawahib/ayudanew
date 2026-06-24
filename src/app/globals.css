@@ -229,6 +229,10 @@ a {
   min-height: 100%;
 }
 
+.hero-swiper .swiper-slide {
+  background: transparent;
+}
+
 .hero-swiper .swiper-button-next,
 .hero-swiper .swiper-button-prev {
   color: white;
@@ -336,4 +340,112 @@ a {
   background-color: #2e5bda;
   border-color: #2e5bda;
   color: #ffffff;
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip link — visible on keyboard focus */
+.skip-to-content {
+  position: absolute;
+  left: 16px;
+  top: -100px;
+  z-index: 100;
+  border-radius: 0 0 6px 6px;
+  background: #0f2d52;
+  color: #ffffff;
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.skip-to-content:focus {
+  top: 0;
+  outline: 3px solid #ffd700;
+  outline-offset: 2px;
+}
+
+/* Keyboard focus visibility */
+:focus-visible {
+  outline: 3px solid #1261ab;
+  outline-offset: 2px;
+}
+
+/* Accessibility: text scaling */
+html[data-a11y-text="1"] {
+  font-size: 106.25%;
+}
+
+html[data-a11y-text="2"] {
+  font-size: 118.75%;
+}
+
+/* Accessibility: high contrast */
+html[data-a11y-high-contrast] body {
+  background: #ffffff;
+  color: #000000;
+}
+
+html[data-a11y-high-contrast] a {
+  color: #0000ee;
+  text-decoration: underline;
+}
+
+html[data-a11y-high-contrast] button,
+html[data-a11y-high-contrast] input,
+html[data-a11y-high-contrast] select,
+html[data-a11y-high-contrast] textarea {
+  border: 2px solid #000000 !important;
+}
+
+html[data-a11y-high-contrast] header,
+html[data-a11y-high-contrast] footer,
+html[data-a11y-high-contrast] .rounded-md,
+html[data-a11y-high-contrast] .rounded-xl {
+  border: 2px solid #000000;
+}
+
+/* Accessibility: highlight links */
+html[data-a11y-highlight-links] a {
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+  background-color: rgba(255, 215, 0, 0.25);
+}
+
+/* Accessibility: readable font */
+html[data-a11y-readable-font] body,
+html[data-a11y-readable-font] body * {
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+/* Accessibility: reduce motion */
+html[data-a11y-reduce-motion] *,
+html[data-a11y-reduce-motion] *::before,
+html[data-a11y-reduce-motion] *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

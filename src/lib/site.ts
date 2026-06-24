@@ -1,4 +1,5 @@
 import { img } from "@/lib/images";
+import { versionedAsset } from "@/lib/assets";
 import { HERO_BACKGROUND_VIDEO } from "@/lib/hero";
 
 export const SITE = {
@@ -11,7 +12,7 @@ export const SITE = {
   donateUrl: "/donate",
   donatePageUrl: "/donate",
   legacyFundUrl: "/deanne-connolly-graham-legacy-fund",
-  backgroundMusic: "/audio/background-music.mp3",
+  backgroundMusic: versionedAsset("/audio/background-music.mp3"),
   logo: img("2018/11/ayuda_logo_new.png"),
   favicon: img("2018/11/favicon.png"),
 };

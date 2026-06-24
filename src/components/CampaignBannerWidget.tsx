@@ -77,9 +77,21 @@ function ShareButtons({ slug, title }: { slug: string; title: string }) {
   );
 }
 
-function CampaignCard({ campaign }: { campaign: CampaignStats }) {
+function CampaignCard({
+  campaign,
+  wide = false,
+  semiTransparent = false,
+}: {
+  campaign: CampaignStats;
+  wide?: boolean;
+  semiTransparent?: boolean;
+}) {
   return (
-    <div className="w-full max-w-[320px] rounded-2xl bg-[#2c343a] p-4 text-white shadow-[0_20px_50px_rgba(0,0,0,0.35)] sm:p-5">
+    <div
+      className={`w-full rounded-2xl p-4 text-white shadow-[0_20px_50px_rgba(0,0,0,0.35)] sm:p-5 ${
+        wide ? "max-w-[640px]" : "max-w-[320px]"
+      } ${semiTransparent ? "bg-[#2c343a]/50 backdrop-blur-sm" : "bg-[#2c343a]"}`}
+    >
       <p className="mb-4 line-clamp-2 text-sm font-medium text-white/85">{campaign.title}</p>
 
       <div className="mb-5 h-2 overflow-hidden rounded-full bg-white/20">
@@ -121,7 +133,13 @@ function CampaignCard({ campaign }: { campaign: CampaignStats }) {
   );
 }
 
-export function CampaignBannerPanel() {
+export function CampaignBannerPanel({
+  wide = false,
+  semiTransparent = false,
+}: {
+  wide?: boolean;
+  semiTransparent?: boolean;
+} = {}) {
   const [campaigns, setCampaigns] = useState<CampaignStats[]>([]);
   const [index, setIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -164,7 +182,7 @@ export function CampaignBannerPanel() {
   if (campaigns.length > 1) {
     return (
       <div className="space-y-3">
-        <CampaignCard campaign={campaign} />
+        <CampaignCard campaign={campaign} wide={wide} semiTransparent={semiTransparent} />
         <div className="flex justify-center gap-2">
           {campaigns.map((item, itemIndex) => (
             <button
@@ -182,7 +200,7 @@ export function CampaignBannerPanel() {
     );
   }
 
-  return <CampaignCard campaign={campaign} />;
+  return <CampaignCard campaign={campaign} wide={wide} semiTransparent={semiTransparent} />;
 }
 
 export default function CampaignBannerWidget() {

@@ -61,9 +61,9 @@ export default function Footer() {
                 <Image
                   src={SITE.logo}
                   alt={SITE.name}
-                  width={170}
-                  height={56}
-                  className="mb-6 h-12 w-auto"
+                  width={510}
+                  height={168}
+                  className="mb-6 h-[144px] w-auto"
                 />
               </Link>
               <p className="max-w-sm text-sm leading-relaxed text-[#3f4f63]">

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import AmbassadorProfileCard from "@/components/AmbassadorProfileCard";
+import CommunityAmbassadorsSection from "@/components/CommunityAmbassadorsSection";
 import ContentImage from "@/components/ContentImage";
-import { COMMUNITY_AMBASSADORS } from "@/lib/ambassadors";
 import { AMBASSADOR_HERO_IMAGE, SITE } from "@/lib/site";
 import { img } from "@/lib/images";
 
@@ -225,29 +224,7 @@ export default function AmbassadorPage() {
         </div>
       </section>
 
-      {/* Community Ambassadors */}
-      <section id="ambassadors" className="border-t border-black/10 bg-[#f4f8fc] py-16 md:py-20">
-        <div className="container-ayuda">
-          <div className="mb-12 text-center">
-            <p className="mb-2 text-xs font-bold uppercase tracking-[0.25em] text-ayuda-blue">
-              Champions of Our Mission
-            </p>
-            <h2 className="font-[family-name:var(--font-lora)] text-3xl text-black md:text-4xl">
-              Community Ambassadors
-            </h2>
-            <p className="mx-auto mt-4 max-w-3xl text-base leading-relaxed text-ayuda-gray">
-              Leaders across Miami-Dade who lend their voices, expertise, and passion
-              to advance Ayuda&apos;s work with children, elders, and families.
-            </p>
-          </div>
-
-          <div className="mx-auto max-w-5xl space-y-8">
-            {COMMUNITY_AMBASSADORS.map((ambassador) => (
-              <AmbassadorProfileCard key={ambassador.id} ambassador={ambassador} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <CommunityAmbassadorsSection />
 
       {/* Partnership */}
       <section id="partnership" className="bg-[#0c2340] py-16 text-white md:py-20">

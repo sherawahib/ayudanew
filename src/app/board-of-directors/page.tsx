@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import CommunityAmbassadorsSection from "@/components/CommunityAmbassadorsSection";
 import PageBanner from "@/components/PageBanner";
 import PersonCard from "@/components/PersonCard";
 import { BOARD_IN_MEMORIAM, BOARD_MEMBERS } from "@/lib/page-content";
 import { SITE } from "@/lib/site";
-
 export const metadata: Metadata = {
   title: "Board Of Directors",
 };
@@ -20,6 +20,8 @@ export default function BoardPage() {
           ))}
         </div>
       </section>
+
+      <CommunityAmbassadorsSection />
 
       <section className="border-t border-black/10 bg-[#fafafa] py-14 md:py-20">
         <div className="container-ayuda">

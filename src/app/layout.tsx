@@ -5,6 +5,8 @@ import {
   PublicSiteHeader,
 } from "@/components/PublicSiteChrome";
 import AuthSessionProvider from "@/components/providers/AuthSessionProvider";
+import AccessibilityProvider from "@/components/providers/AccessibilityProvider";
+import SkipToContent from "@/components/SkipToContent";
 import { SITE } from "@/lib/site";
 import "./globals.css";
 
@@ -42,10 +44,15 @@ export default function RootLayout({
       </head>
       <body className="min-h-full bg-white text-black antialiased" id="top">
         <AuthSessionProvider>
-          <PublicSiteHeader />
-          <main className="flex-1">{children}</main>
-          <PublicSiteFooter />
-          <PublicSiteExtras />
+          <AccessibilityProvider>
+            <SkipToContent />
+            <PublicSiteHeader />
+            <main id="main-content" tabIndex={-1} className="flex-1 outline-none">
+              {children}
+            </main>
+            <PublicSiteFooter />
+            <PublicSiteExtras />
+          </AccessibilityProvider>
         </AuthSessionProvider>
       </body>
     </html>

@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Footer from "@/components/Footer";
 import BackgroundMusic from "@/components/BackgroundMusic";
+import AccessibilityWidget from "@/components/AccessibilityWidget";
 import Header from "@/components/Header";
 import { BackToTop, FloatingDonate } from "@/components/SiteChrome";
 
@@ -30,6 +31,7 @@ export function PublicSiteExtras() {
 
   return (
     <>
+      <AccessibilityWidget />
       <BackgroundMusic />
       <BackToTop />
       <FloatingDonate />

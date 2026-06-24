@@ -2,9 +2,15 @@
 
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { CampaignBannerPanel } from "@/components/CampaignBannerWidget";
 import { HERO_BANNER_HEIGHT_CLASS, HERO_BACKGROUND_VIDEO } from "@/lib/hero";
-import { HERO_SLIDES, type HeroButtonVariant } from "@/lib/site";
+import { AUCTION_URL, SITE, type HeroButtonVariant } from "@/lib/site";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const BUTTON_CLASS: Record<HeroButtonVariant, string> = {
   gray: "hero-btn hero-btn-gray",
@@ -37,8 +43,63 @@ function HeroButton({
   );
 }
 
+function SlideShell({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="container-ayuda flex h-full min-h-[inherit] items-center py-8 md:py-0">
+      {children}
+    </div>
+  );
+}
+
+function LeftTextSlide({
+  subtitle,
+  buttons,
+}: {
+  subtitle: string;
+  buttons: { label: string; href: string; variant: HeroButtonVariant }[];
+}) {
+  return (
+    <SlideShell>
+      <div className="w-full max-w-xl text-center md:text-left">
+        <p className="font-[family-name:var(--font-poppins)] text-lg font-bold leading-tight tracking-tight text-white drop-shadow-md sm:text-2xl md:text-3xl lg:text-[2rem] lg:leading-[1.2]">
+          {subtitle}
+        </p>
+        <div className="mt-5 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center md:items-start">
+          {buttons.map((button) => (
+            <HeroButton key={button.label} {...button} />
+          ))}
+        </div>
+      </div>
+    </SlideShell>
+  );
+}
+
+function AmbassadorSlide() {
+  return (
+    <SlideShell>
+      <div className="w-full max-w-2xl text-center md:text-left">
+        <p className="text-xs font-bold uppercase tracking-[0.3em] text-[#00b388] drop-shadow-sm sm:text-sm">
+          Ayuda Miami Ambassador
+        </p>
+        <h2 className="mt-2 font-[family-name:var(--font-lora)] text-3xl text-white drop-shadow-md sm:text-4xl md:text-5xl lg:text-6xl">
+          James Egozi
+        </h2>
+        <p className="mt-2 text-base font-medium text-white/90 sm:text-lg md:text-xl">
+          American Racing Driver
+        </p>
+        <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/85 sm:text-base md:text-lg">
+          18 years old. Born in Miami. Racing in Europe. The future of motorsport
+          doesn&apos;t wait — and neither does James.
+        </p>
+        <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center md:items-start">
+          <HeroButton label="Donate" href={SITE.donateUrl} variant="primary" />
+        </div>
+      </div>
+    </SlideShell>
+  );
+}
+
 export default function HomeHero() {
-  const slide = HERO_SLIDES[0];
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -69,27 +130,53 @@ export default function HomeHero() {
 
       <div className="absolute inset-0 bg-black/35" />
 
-      <div className="container-ayuda relative z-10 flex h-full min-h-[inherit] items-center justify-center">
-        <div className="flex w-full max-w-6xl flex-col items-center justify-center gap-8 md:flex-row md:items-center md:gap-10 lg:gap-14">
-          <div className="w-full max-w-xl text-center md:flex-1 md:text-left">
-            {slide.subtitle && (
-              <p className="font-[family-name:var(--font-poppins)] text-lg font-bold leading-tight tracking-tight text-white drop-shadow-md sm:text-2xl md:text-3xl lg:text-[2rem] lg:leading-[1.2]">
-                {slide.subtitle}
-              </p>
-            )}
+      <Swiper
+        modules={[Autoplay, Navigation, Pagination]}
+        loop
+        speed={700}
+        autoplay={{ delay: 9000, disableOnInteraction: false }}
+        pagination={{ clickable: true }}
+        navigation
+        className="hero-swiper relative z-10 h-full w-full"
+      >
+        <SwiperSlide>
+          <LeftTextSlide
+            subtitle="Please give to this one of a kind organization – no amount is too small"
+            buttons={[
+              {
+                label: "DeAnne Connolly Graham Legacy Fund",
+                href: SITE.legacyFundUrl,
+                variant: "primary",
+              },
+            ]}
+          />
+        </SwiperSlide>
 
-            <div className="mt-5 flex w-full flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center md:items-start">
-              {slide.buttons.map((button) => (
-                <HeroButton key={button.label} {...button} />
-              ))}
+        <SwiperSlide>
+          <SlideShell>
+            <div className="flex w-full justify-center md:justify-start">
+              <CampaignBannerPanel wide semiTransparent />
             </div>
-          </div>
+          </SlideShell>
+        </SwiperSlide>
 
-          <div className="w-full max-w-[320px] shrink-0 md:w-auto">
-            <CampaignBannerPanel />
-          </div>
-        </div>
-      </div>
+        <SwiperSlide>
+          <AmbassadorSlide />
+        </SwiperSlide>
+
+        <SwiperSlide>
+          <LeftTextSlide
+            subtitle="A message from Miami Dade County Mayor Daniella Levine Cava"
+            buttons={[
+              {
+                label: "Auction Now",
+                href: AUCTION_URL,
+                variant: "primary",
+              },
+            ]}
+          />
+        </SwiperSlide>
+      </Swiper>
     </section>
   );
 }
