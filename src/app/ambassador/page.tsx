@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import CommunityAmbassadorsSection from "@/components/CommunityAmbassadorsSection";
 import ContentImage from "@/components/ContentImage";
 import { AMBASSADOR_HERO_IMAGE, SITE } from "@/lib/site";
 import { img } from "@/lib/images";
@@ -223,8 +222,6 @@ export default function AmbassadorPage() {
           </div>
         </div>
       </section>
-
-      <CommunityAmbassadorsSection />
 
       {/* Partnership */}
       <section id="partnership" className="bg-[#0c2340] py-16 text-white md:py-20">
