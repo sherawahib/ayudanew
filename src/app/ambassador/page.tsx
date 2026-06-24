@@ -62,36 +62,6 @@ const CAREER = [
   },
 ];
 
-const PARTNERSHIP_TIERS = [
-  {
-    tier: "Tier 01",
-    title: "Investor / Brand Partner",
-    features: [
-      "Primary car branding (nose & sidepod)",
-      "Race suit & helmet logo",
-      "Exclusive digital campaigns",
-      "Paddock hospitality access",
-      "James as brand ambassador",
-      "Corporate event appearances",
-    ],
-  },
-  {
-    tier: "Tier 02",
-    title: "Title Sponsor",
-    features: [
-      "Prominent car placement",
-      "Race suit branding",
-      "Social media features",
-      "Paddock presence",
-    ],
-  },
-  {
-    tier: "Tier 04",
-    title: "Supporting Sponsor",
-    features: ["Car logo placement", "Digital presence", "No amount too small"],
-  },
-];
-
 export default function AmbassadorPage() {
   return (
     <>
@@ -120,9 +90,9 @@ export default function AmbassadorPage() {
             doesn&apos;t wait — and neither does James.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
-            <a href="#partnership" className="btn-ayuda btn-ayuda-gray">
-              Partnership
-            </a>
+            <Link href={SITE.donatePageUrl} className="btn-ayuda btn-ayuda-gray">
+              Donate Now
+            </Link>
             <Link href="/contact-us" className="btn-ayuda btn-ayuda-outline">
               Contact Ayuda
             </Link>
@@ -219,59 +189,6 @@ export default function AmbassadorPage() {
                 </span>
               </article>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Partnership */}
-      <section id="partnership" className="bg-[#0c2340] py-16 text-white md:py-20">
-        <div className="container-ayuda">
-          <div className="mb-12 text-center">
-            <p className="mb-2 text-xs font-bold uppercase tracking-[0.25em] text-[#00b388]">
-              Your Brand in Motion
-            </p>
-            <h2 className="font-[family-name:var(--font-lora)] text-3xl md:text-4xl">
-              Partnership
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base text-white/70">
-              We don&apos;t just deliver a sticker on a car. We create a living partnership
-              — real visibility, digital campaigns, and presence at the paddock on
-              Europe&apos;s densest grids.
-            </p>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-3">
-            {PARTNERSHIP_TIERS.map((tier) => (
-              <article
-                key={tier.title}
-                className="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm"
-              >
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-[#00b388]">
-                  {tier.tier}
-                </p>
-                <h3 className="mt-2 font-[family-name:var(--font-lora)] text-xl">{tier.title}</h3>
-                <ul className="mt-5 space-y-2">
-                  {tier.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2 text-sm text-white/80">
-                      <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#00b388]" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            ))}
-          </div>
-
-          <div className="mt-10 text-center">
-            <a
-              href={SITE.phoneHref}
-              className="inline-flex items-center gap-2 text-lg font-medium text-white hover:text-[#00b388]"
-            >
-              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                <path d="M6.6 10.8c1.5 2.9 3.7 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V21c0 .6-.4 1-1 1C10.6 22 2 13.4 2 3c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z" />
-              </svg>
-              {SITE.phone}
-            </a>
           </div>
         </div>
       </section>

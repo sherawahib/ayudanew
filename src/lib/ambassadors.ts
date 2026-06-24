@@ -51,20 +51,6 @@ export const COMMUNITY_AMBASSADORS: CommunityAmbassador[] = [
     bio: "Kyra Fulleda brings over 19 years of experience in the Medicare industry, with a strong background in Medicare Advantage plans. She is Director of Market Development for Carepoint. A bilingual professional known for hands-on performance, she cultivates excellent relationships with new and existing brokers. Kyra has managed all aspects of the organization, overseeing four district managers and more than 400 brokers. She rebuilt, restructured, and revitalized her sales team, recruiting more than 150 brokers and general agencies while communicating a clear, strategic sales vision and effectively coaching veteran and junior team members.",
   },
   {
-    id: "pamela-calderon",
-    firstName: "Pamela",
-    lastName: "Calderón",
-    role: "Ayuda Ambassador",
-    bio: "Pamela Calderón is a digital marketing, sales, and business development strategist with training in administration, marketing, and finance. She brings over 15 years of experience combining corporate leadership, process optimization, and execution of high-impact digital campaigns. A specialist in brand positioning for tax and accounting professionals in the U.S., she is also expert in organizing corporate and community events, lead generation, conversion funnels, and digital community growth. She is the founder of a nonprofit organization focused on social impact and community mobilization. Since 2020, as an independent consultant across the U.S. and Latin America, she develops social media strategies and advertising campaigns with sales funnels, lead generation, and conversion optimization.",
-  },
-  {
-    id: "romina-orozco-encio",
-    firstName: "Romina",
-    lastName: "Orozco-Encio",
-    role: "Ayuda Ambassador",
-    bio: "Romina Orozco-Encio is a community-driven event professional with over 20 years of experience in floral design, event coordination, and sports management. Passionate about uniting people through culture, creativity, and sports, she is skilled at organizing large-scale community events, fundraisers, and tournaments in partnership with local organizations, city officials, and law enforcement. Recognized multiple times by the City of Miami Beach for outstanding dedication, leadership, and community impact, she is Owner & Event Designer at Abbott Florist in Miami Beach. She is an active member of the North Beach CRA and Normandy Fountain Business Association, promoting neighborhood growth and small business visibility.",
-  },
-  {
     id: "eva-dias",
     firstName: "Eva",
     lastName: "Dias",

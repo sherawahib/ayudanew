@@ -92,6 +92,18 @@ export const BOARD_MEMBERS = [
     bio:
       "Marjorie York is a community activist who is on many Boards in Miami Beach and throughout the County. I especially enjoy helping to plan events where everyone can gather to exchange ideas and discuss legislative issues. It is very gratifying to witness people receiving needed services provided by AYUDA.",
   },
+  {
+    name: "Pamela Calderón, Board Member",
+    image: img("2026/06/pamela-calderon-board.png"),
+    bio:
+      "Pamela Calderón is a digital marketing, sales, and business development strategist with training in administration, marketing, and finance. She brings over 15 years of experience combining corporate leadership, process optimization, and execution of high-impact digital campaigns. A specialist in brand positioning for tax and accounting professionals in the U.S., she is also expert in organizing corporate and community events, lead generation, conversion funnels, and digital community growth. She uses her experience in business and marketing to help expand opportunities, empower communities, and support meaningful, lasting impact.",
+  },
+  {
+    name: "Romina Isabel Orozco-Encio, Board Member",
+    image: img("2026/06/romina-orozco-encio-board.png"),
+    bio:
+      "Romina Orozco-Encio is a community-driven event professional with over 20 years of experience in floral design, event coordination, and sports management. Passionate about uniting people through culture, creativity, and sports, she is skilled at organizing large-scale community events, fundraisers, and tournaments in partnership with local organizations, city officials, and law enforcement. Recognized multiple times by the City of Miami Beach for outstanding dedication, leadership, and community impact, she is Owner & Event Designer at Abbott Florist in Miami Beach.",
+  },
 ];
 
 export const LEGACY_FUND_PATH = SITE.legacyFundUrl;
