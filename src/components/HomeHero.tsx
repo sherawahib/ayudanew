@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useRef } from "react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { CampaignBannerPanel } from "@/components/CampaignBannerWidget";
 import { HERO_BANNER_HEIGHT_CLASS, HERO_BACKGROUND_VIDEO } from "@/lib/hero";
 import { AUCTION_URL, SITE, type HeroButtonVariant } from "@/lib/site";
 
@@ -150,14 +149,6 @@ export default function HomeHero() {
               },
             ]}
           />
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <SlideShell>
-            <div className="flex w-full justify-center md:justify-start">
-              <CampaignBannerPanel wide semiTransparent />
-            </div>
-          </SlideShell>
         </SwiperSlide>
 
         <SwiperSlide>

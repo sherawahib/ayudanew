@@ -50,11 +50,4 @@ export const COMMUNITY_AMBASSADORS: CommunityAmbassador[] = [
     image: img("2025/08/Kyra-2-Digital-Marketing-Agency-Instagram-Post-1080-x-1350-px-240x300.png"),
     bio: "Kyra Fulleda brings over 19 years of experience in the Medicare industry, with a strong background in Medicare Advantage plans. She is Director of Market Development for Carepoint. A bilingual professional known for hands-on performance, she cultivates excellent relationships with new and existing brokers. Kyra has managed all aspects of the organization, overseeing four district managers and more than 400 brokers. She rebuilt, restructured, and revitalized her sales team, recruiting more than 150 brokers and general agencies while communicating a clear, strategic sales vision and effectively coaching veteran and junior team members.",
   },
-  {
-    id: "eva-dias",
-    firstName: "Eva",
-    lastName: "Dias",
-    role: "Ayuda Ambassador",
-    bio: "Eva Dias is an accomplished business executive who built her human resources career within four global industry leaders — Philip Morris, L'Oréal, Novartis, and IFF (International Flavours & Fragrances). She has gained broad international experience working in Brazil, Portugal, Switzerland, France, and the United States since 2003. She is CEO & Founder of Phoenix Human Capital Solutions, with the mission of helping people and organizations unveil and unleash the best version of themselves, and Co-Founder of the Life Science Women Network. She co-authored Empowered Women and 100 Successful Women Around the World, sharing her journey from Brazil to the world stage. She speaks English, Portuguese, French, and Spanish fluently.",
-  },
 ];

@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
-import EventsFeaturedVideo from "@/components/EventsFeaturedVideo";
 import ImageGallery from "@/components/ImageGallery";
 import PageBanner from "@/components/PageBanner";
 import { EVENT_IMAGES } from "@/lib/page-content";
-
 export const metadata: Metadata = {
   title: "Events",
 };
@@ -18,9 +16,7 @@ export default function EventsPage() {
           throughout the years! Please make sure to check back frequently to see
           what is coming up in the future!
         </p>
-        <EventsFeaturedVideo />
-        <ImageGallery images={EVENT_IMAGES} />
-      </section>
+        <ImageGallery images={EVENT_IMAGES} />      </section>
     </>
   );
 }

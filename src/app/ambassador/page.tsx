@@ -192,29 +192,6 @@ export default function AmbassadorPage() {
           </div>
         </div>
       </section>
-
-      {/* Portimao CTA */}
-      <section className="relative overflow-hidden bg-[#00b388] py-16 text-white">
-        <div className="container-ayuda text-center">
-          <p className="text-xs font-bold uppercase tracking-[0.3em] text-white/80">
-            Portimao 2026 | EUROCUP-3
-          </p>
-          <h2 className="mt-3 font-[family-name:var(--font-lora)] text-3xl md:text-4xl">
-            Join Team #48
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base text-white/90">
-            Follow James on his journey and support Ayuda Miami&apos;s ambassador program.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link href={SITE.donatePageUrl} className="btn-ayuda bg-ayuda-blue px-8 py-3 text-white hover:bg-ayuda-blue-dark">
-              Donate Now
-            </Link>
-            <Link href="/contact-us" className="btn-ayuda border-white bg-transparent text-white hover:bg-white/10">
-              Get In Touch
-            </Link>
-          </div>
-        </div>
-      </section>
     </>
   );
 }

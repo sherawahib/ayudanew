@@ -104,6 +104,12 @@ export const BOARD_MEMBERS = [
     bio:
       "Romina Orozco-Encio is a community-driven event professional with over 20 years of experience in floral design, event coordination, and sports management. Passionate about uniting people through culture, creativity, and sports, she is skilled at organizing large-scale community events, fundraisers, and tournaments in partnership with local organizations, city officials, and law enforcement. Recognized multiple times by the City of Miami Beach for outstanding dedication, leadership, and community impact, she is Owner & Event Designer at Abbott Florist in Miami Beach.",
   },
+  {
+    name: "Eva Dias, Board Member",
+    image: img("2026/06/eva-dias-board.png"),
+    bio:
+      "Eva Dias is an accomplished business executive who built her human resources career within four global industry leaders — Philip Morris, L'Oréal, Novartis, and IFF (International Flavours & Fragrances). She has gained broad international experience working in Brazil, Portugal, Switzerland, France, and the United States since 2003. She is CEO & Founder of Phoenix Human Capital Solutions, with the mission of helping people and organizations unveil and unleash the best version of themselves, and Co-Founder of the Life Science Women Network. She co-authored Empowered Women and 100 Successful Women Around the World, sharing her journey from Brazil to the world stage. She speaks English, Portuguese, French, and Spanish fluently.",
+  },
 ];
 
 export const LEGACY_FUND_PATH = SITE.legacyFundUrl;
