@@ -1,6 +1,5 @@
 import { img } from "@/lib/images";
 import { versionedAsset } from "@/lib/assets";
-import { HERO_BACKGROUND_VIDEO } from "@/lib/hero";
 
 export const SITE = {
   name: "Ayuda Miami",
@@ -127,7 +126,7 @@ export const HOME_CARDS = [
   },
 ];
 
-export const AMBASSADOR_HERO_IMAGE = img("2026/06/aa.webp");
+export const AMBASSADOR_HERO_IMAGE = img("2026/06/james-egozi-ambassador-banner.png");
 
 export type HeroButtonVariant = "gray" | "gray-bloom" | "outline" | "primary" | "ghost";
 
@@ -151,7 +150,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     id: "clouds",
     kind: "cloud",
     alt: "Clouds",
-    backgroundVideo: HERO_BACKGROUND_VIDEO,
+    backgroundVideo: versionedAsset("/videos/hero-banner.mp4"),
     subtitle:
       "Please give to this one of a kind organization – no amount is too small",
     buttons: [

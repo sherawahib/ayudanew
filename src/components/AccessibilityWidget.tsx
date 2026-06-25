@@ -1,8 +1,15 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useId, useRef, useState } from "react";
 import { useAccessibility } from "@/components/providers/AccessibilityProvider";
+
+function AdaIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M12 2a2 2 0 110 4 2 2 0 010-4zm7.5 6.2a1 1 0 00-1.4-.2l-2.1 1.6a.5.5 0 01-.6 0l-1.8-1.4a3 3 0 00-3.7.4L7.8 11H4a1 1 0 100 2h4.2l1.1 2.2a3 3 0 002.7 1.7H14a1 1 0 100-2h-2.1l-.8-1.6 1.9-1.5 1.4 1.1a3 3 0 003.5.4l2.1-1.6a1 1 0 00.2-1.4zM6.5 18.5A4.5 4.5 0 0011 22h2a4.5 4.5 0 004.5-4.5v-1a1 1 0 10-2 0v1A2.5 2.5 0 0113 20h-2a2.5 2.5 0 01-2.5-2.5v-1a1 1 0 10-2 0v1z" />
+    </svg>
+  );
+}
 
 function ToggleRow({
   label,
@@ -89,7 +96,7 @@ export default function AccessibilityWidget() {
   }
 
   return (
-    <div className="fixed bottom-[7.25rem] left-4 z-40 sm:bottom-[8.25rem] sm:left-6">
+    <div className="fixed bottom-[4.75rem] left-4 z-40 sm:bottom-[5.5rem] sm:left-6">
       {open ? (
         <div
           ref={panelRef}
@@ -214,16 +221,9 @@ export default function AccessibilityWidget() {
         aria-label={open ? "Close accessibility options" : "Open accessibility options"}
         title="Accessibility options"
         onClick={() => setOpen((value) => !value)}
-        className="flex h-[5.5rem] w-[5.5rem] items-center justify-center rounded-full border border-black/10 bg-white shadow-lg transition-transform hover:scale-105"
+        className="flex h-11 w-11 items-center justify-center rounded-full border border-black/10 bg-white text-ayuda-blue shadow-lg transition-transform hover:scale-105"
       >
-        <Image
-          src="/images/accessibility-widget-icon.png"
-          alt=""
-          width={88}
-          height={88}
-          className="h-14 w-14 object-contain"
-          aria-hidden
-        />
+        <AdaIcon />
       </button>
     </div>
   );
