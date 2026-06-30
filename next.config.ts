@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ["image/webp"],
-    minimumCacheTTL: 60 * 60 * 24,
+    minimumCacheTTL: 60,
     deviceSizes: [640, 750, 828, 1080, 1200],
     imageSizes: [16, 32, 48, 64, 96, 128, 256],
   },
@@ -49,7 +49,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=3600, must-revalidate",
+            value: "public, max-age=0, must-revalidate",
           },
         ],
       },
