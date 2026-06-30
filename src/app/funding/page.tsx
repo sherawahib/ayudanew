@@ -16,7 +16,7 @@ export default function FundingPage() {
           AYUDA receives funding from public agencies, private foundations, and
           government contracts that support our programs across Miami-Dade County.
         </p>
-        <LogoGrid logos={FUNDER_LOGOS} columns={4} />
+        <LogoGrid logos={FUNDER_LOGOS} columns={3} size="large" />
       </section>
     </>
   );

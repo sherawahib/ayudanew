@@ -503,13 +503,7 @@ export const DONOR_ENTRIES = [
     description:
       "MIAMI, March 1, 2006 – AYUDA (Adults and Youth who are Underserved Deserve Attention), a nonprofit organization dedicated to assisting underserved and/or at-risk families in Miami-Dade County through education, life-skills training, and programs that support self-sufficiency, received a $3,750.00 grant from the Women’s Fund of Miami-Dade County to support the Girls Reach High Leadership Program.",
   },
-  {
-    title: "December 2005 Newsletter",
-    date: "December 8th, 2005",
-    image: img("2025/07/gold-transparency-25.png"),
-    description:
-      "SAME GOAL BEHIND NEW NAME AND MISSION Thanks to a $10,000 grant received by Hispanics in Philanthropy (HIP), AYUDA has undergone a long awaited strategic planning! THE NAME: In order to help identify with the growing needs and cultures in Miami-Dade County, AYUDA, chose to make its name bilingual. “Ayuda” meaning “help” in Spanish, added to the name an English explanation: A dults and Y outh who are U nder-served D eserve A ttention. THE MISSION STATEMENT: AYUDA also modified its mission statement to be more comprehensive of the community in Miami-Dade County and to target its constant expansion of services. The new mission statement: To assist under-served and/ or at-risk families in the Miami-Dade County through education, life-skills training, and programs that support self-sufficiency. THE RESULT: a brand-new AYUDA supported by its programs, objectives, prospective clients, partners, and donors. The new name complements its mission and shows the organization’s desire to change with the needs of the community it serves. The mission of AYUDA is to help improve the lives of children and families who are underserved and / or at risk in South Florida through education, life skills training, and programs that support self sufficiency.",
-  },
+
 ];
 
 export const EVENT_IMAGES = [
@@ -808,7 +802,6 @@ export const SPONSOR_LOGOS = [
   { src: img("2019/04/Disney-Parks-logo.jpg"), alt: "Disney Parks", href: "http://www.mountgayrum.com/" },
   { src: img("2019/04/show-tech-inc-logo.jpg"), alt: "Show Tech Inc", href: "http://www.mountgayrum.com/" },
   { src: img("2018/08/deauville.png"), alt: "Deauville Beach Resort", href: "http://www.deauvillebeachresort.com/" },
-  { src: img("2025/07/gold-transparency-25.png"), alt: "Candid Gold Transparency" },
 ];
 
 export const SPONSOR_TIERS = [
@@ -894,7 +887,6 @@ export const SPONSOR_TIERS = [
         alt: "Deauville Beach Resort",
         href: "http://www.deauvillebeachresort.com/",
       },
-      { src: img("2025/07/gold-transparency-25.png"), alt: "Candid Gold Transparency" },
     ],
   },
 ];
