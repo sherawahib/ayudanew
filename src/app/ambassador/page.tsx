@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ContentImage from "@/components/ContentImage";
+import JamesEgoziBanner from "@/components/JamesEgoziBanner";
 import SocialIcon from "@/components/SocialIcon";
 import {
   JAMES_EGOZI_CAREER,
@@ -12,7 +13,7 @@ import {
   JAMES_EGOZI_STATS,
   JAMES_EGOZI_VIDEO,
 } from "@/lib/james-egozi";
-import { AMBASSADOR_HERO_IMAGE, SITE } from "@/lib/site";
+import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "James Egozi | Ambassador",
@@ -39,17 +40,8 @@ function SectionTitle({ children }: { children: React.ReactNode }) {
 export default function AmbassadorPage() {
   return (
     <>
-      <section className="relative h-[420px] overflow-hidden sm:h-[520px] md:h-[600px] lg:h-[680px]">
-        <ContentImage
-          src={AMBASSADOR_HERO_IMAGE}
-          alt="James Egozi — American racing driver, Ayuda Miami Ambassador"
-          fill
-          className="object-cover object-center"
-          sizes="100vw"
-          priority
-        />
-
-        <div className="container-ayuda relative flex h-full flex-col justify-end pb-10 md:pb-14">
+      <JamesEgoziBanner priority>
+        <div className="container-ayuda pb-10 md:pb-14">
           <div className="flex flex-wrap gap-3">
             <Link href={SITE.donatePageUrl} className="btn-ayuda btn-ayuda-gray">
               Donate Now
@@ -59,7 +51,7 @@ export default function AmbassadorPage() {
             </Link>
           </div>
         </div>
-      </section>
+      </JamesEgoziBanner>
 
       <section className="border-b border-black/10 bg-white py-12">
         <div className="container-ayuda">
