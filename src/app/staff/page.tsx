@@ -6,32 +6,26 @@ export const metadata: Metadata = {
   title: "Staff",
 };
 
-const STAFF_SECTIONS = [
+const CORE_STAFF = [
   { title: "President/CEO", people: ["Diana Susi, MSW, MFT, CMHP"] },
   { title: "Director of Programs", people: ["Cecilia De Loof, MSW"] },
-  { title: "Financial Advisor", people: ["Herman S. Rivas, CPA, PA"] },
+  { title: "Financial Advisor", people: ["Jacob Zhang CPA"] },
   {
-    title: "Youth After School Program Coordinator",
-    people: ["Anne Marie Tristan, BS, MBA"],
+    title: "Community Liaison",
+    people: ["Anne-Marie Tristan, BS, MBA"],
   },
-  {
-    title: "Mental Health Therapist",
-    people: ["Daniela Biaggini, LMHC", "Juzmin Molina, MS, RMHCI, RMFTI"],
-  },
-  {
-    title: "T.A.L.L Counselors",
-    people: ["Joanna Arias, BS", "Genesis Barahona", "Kelsey Campos"],
-  },
-  {
-    title: "Contract Compliance Officer",
-    people: ["Roxana Teran, BS", "Tamara San Juan, MSF"],
-  },
-  {
-    title: "Here For You Program / Gerontological Counselor",
-    people: ["Kelsey Campos"],
-  },
-  { title: "Homemaker Services", people: ["Maylet Mayor"] },
-];
+] as const;
+
+const PROGRAM_STAFF_INTRO =
+  "Staff for our Programs are various and vary as needed:";
+
+const PROGRAM_STAFF_ROLES = [
+  "Mental Health Therapist",
+  "T.A.L.L Counselors",
+  "Contract Compliance Officer",
+  "Here For You Program / Gerontological Counselor",
+  "Homemaker Services",
+] as const;
 
 const SIDEBAR_LINKS = [
   { label: "Programs", href: "/programs" },
@@ -43,6 +37,19 @@ const SIDEBAR_LINKS = [
   { label: "Contact Us", href: "/contact-us" },
 ];
 
+function StaffBlock({ title, people }: { title: string; people: readonly string[] }) {
+  return (
+    <div className="border-b border-black/10 pb-6 last:border-0">
+      <h4 className="mb-2 text-base font-semibold text-black">{title}</h4>
+      {people.map((person) => (
+        <p key={person} className="text-base text-black">
+          {person}
+        </p>
+      ))}
+    </div>
+  );
+}
+
 export default function StaffPage() {
   return (
     <>
@@ -50,16 +57,22 @@ export default function StaffPage() {
       <section className="container-ayuda py-14 md:py-20">
         <div className="grid gap-12 lg:grid-cols-[2fr_1fr]">
           <div className="space-y-8">
-            {STAFF_SECTIONS.map((section) => (
-              <div key={section.title} className="border-b border-black/10 pb-6 last:border-0">
-                <h4 className="mb-2 text-base font-semibold text-black">{section.title}</h4>
-                {section.people.map((person) => (
-                  <p key={person} className="text-base text-black">
-                    {person}
-                  </p>
+            {CORE_STAFF.map((section) => (
+              <StaffBlock key={section.title} {...section} />
+            ))}
+
+            <div className="border-b border-black/10 pb-6">
+              <p className="mb-6 font-[family-name:var(--font-lora)] text-xl font-semibold leading-snug text-ayuda-blue md:text-2xl">
+                {PROGRAM_STAFF_INTRO}
+              </p>
+              <div className="space-y-6">
+                {PROGRAM_STAFF_ROLES.map((title) => (
+                  <h4 key={title} className="text-base font-semibold text-black">
+                    {title}
+                  </h4>
                 ))}
               </div>
-            ))}
+            </div>
           </div>
 
           <aside className="border border-black/10 bg-[#fafafa] p-6">
