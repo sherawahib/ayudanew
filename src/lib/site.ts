@@ -1,4 +1,5 @@
 import { img } from "@/lib/images";
+import { JAMES_EGOZI_BANNER } from "@/lib/hero";
 import { versionedAsset } from "@/lib/assets";
 
 export const SITE = {
@@ -126,7 +127,7 @@ export const HOME_CARDS = [
   },
 ];
 
-export const AMBASSADOR_HERO_IMAGE = img("2026/06/james-egozi-ambassador-banner.png");
+export const AMBASSADOR_HERO_IMAGE = JAMES_EGOZI_BANNER;
 
 export type HeroButtonVariant = "gray" | "gray-bloom" | "outline" | "primary" | "ghost";
 
