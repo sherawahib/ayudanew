@@ -3,7 +3,9 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const donors = JSON.parse(fs.readFileSync("scripts/donors-scraped.json", "utf8"));
+const donors = JSON.parse(fs.readFileSync("scripts/donors-scraped.json", "utf8")).filter(
+  (donor) => donor.title !== "December 2005 Newsletter",
+);
 
 const imageMap = {
   "The Norman Braman Philanthropic Fund Donates $10,000|May 15, 2018": null,
