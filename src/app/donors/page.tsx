@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   title: "Donors",
 };
 
+export const revalidate = 0;
+
 export default function DonorsPage() {
   return (
     <>

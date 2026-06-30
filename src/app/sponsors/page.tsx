@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   title: "Sponsors",
 };
 
+export const revalidate = 0;
+
 export default function SponsorsPage() {
   return (
     <>
